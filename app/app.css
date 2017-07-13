@@ -1,0 +1,130 @@
+/* app css stylesheet */
+
+.menu {
+  list-style: none;
+  border-bottom: 0.1em solid black;
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+}
+
+.menu:before {
+  content: "[";
+}
+
+.menu:after {
+  content: "]";
+}
+
+.menu > li {
+  display: inline;
+}
+
+.menu > li + li:before {
+  content: "|";
+  padding-right: 0.3em;
+}
+/*.navbar-brand{
+
+}
+.img{
+  background: url(/images/bg-header.png) repeat-x top #1fdbfe
+
+}
+.site-logo {
+  padding: 15px 15px 15px 10px;
+  margin-left: 25px;
+  margin-right: 25px
+}
+footer {
+  padding-top: 1em;
+  margin-top: 40px;
+  background-color: #eee;
+  position:relative;
+
+}
+
+
+
+footer .footer-bottom p {
+  color: #b7b8bb;
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+}
+#wid2{
+  text-align: left;
+  padding-left: 50px;
+  font-size: 14px;
+}
+#wid3{
+  text-align: right;
+  font-size: 14px;
+
+
+  padding-right: 50px;
+  font-size: 14px;
+}
+#wid4{
+  text-align: left;
+  font-size: 14px;
+  padding-left: 50px;
+}
+#wid5{
+  text-align:right;
+  font-size: 14px;
+  padding-right: 50px;
+}
+footer .container{
+  height: 52px;
+}
+.navbar-default[_ngcontent-vni-17] {
+  border-radius: 0
+}
+
+.navbar[_ngcontent-vni-17] {
+  margin: 0 auto
+}
+.nav-tabs li.active a {
+  background-color: lightgray !important;
+}
+
+.nav-tabs li a {
+  background-color: #eeeeee !important;
+}
+header   .navbar-inner[_ngcontent-vni-17] {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  color: #fff
+}
+
+header   .navbar {
+  margin: 0;
+  min-height: 0
+}
+
+header   .navbar   .nav {
+  float: right
+}
+
+header   .navbar  .nav[_ngcontent-vni-17] li[_ngcontent-vni-17] a[_ngcontent-vni-17] {
+  color: #d1d3d4
+}
+
+header   .navbar   .nav[_ngcontent-vni-17] li[_ngcontent-vni-17] a[_ngcontent-vni-17]:hover {
+  text-decoration: underline;
+  color: #fff;
+  background-color: #00418d
+}
+
+header   .navbar   .navbar-inner[_ngcontent-vni-17] {
+  background-color: #00418d;
+  background-image: none;
+  color: #fff
+}
+
+header   .navbar-inverse   .navbar-inner[_ngcontent-vni-17] {
+  background-color: #00418d;
+  -webkit-filter: none;
+  filter: none
+}
