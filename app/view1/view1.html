@@ -65,9 +65,203 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-2" id="authbtndiv">
-                        <!-- <button type="button" class="btn btn-danger btn-lg" data-target="#authorize-modal" data-toggle="modal" data-original-title="" data-toggle="tooltip" id="authbtn">
+                        <div ng-controller="View1Ctrl as $ctrl" class="modal-demo">
+                         <script type="text/ng-template" id="myModalContent.html">
+                            <div class="modal-header">
+                                <h3 class="modal-title" id="modal-title">Authorize Server</h3>
+                            </div>
+                            <div class="modal-body" id="modal-body">
+                                <div class="modal fade" tabindex="-1" role="dialog" id="authorize-modal">
+                                    <div class="modal-dialog" style="width:900px">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title">Authorize Server</h4>
+                                            </div>
+                                            <div class="modal-body" style="overflow:auto;">
+                                                <div class="row" align="center" style="font-size:14px;font-weight:bold;color:#233a52;">
+                                                    <div class="col-md-12">Authorize the FHIR server by selecting Public Server or Confidential Server. Please enter the client ID and client Secret for the FHIR server being tested, these are supplied by the server administrator/single-sign-on application.</div>
+                                                </div>
+                                                <div class='row'><div class='span12'><hr style="margin:5px;"></div></div>
+                                                <div class="col-md-12">
+                                                    <label class="checkbox-inline"><input id="rdb1" type="radio" name="toggler" value="1" style="margin-right:10px;margin-top:0px" />Public Server</label>
+                                                    <label class="checkbox-inline active"><input id="rdb2" type="radio" name="toggler" value="2" checked="" style="margin-right:10px;margin-top:0px" />Confidential Server</label>
+                                                </div>
+
+
+                                                <div id="blk-1" class="toHide rows" style="display:none;padding-top:35px;">
+                                                    <form class="form-horizontal">
+                                                        <div class="form-group">
+                                                            <label for="publicclientid" class="col-sm-3 control-label">Client ID:</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" class="form-control" id="publicclientid">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="publicserverurl" class="col-sm-3 control-label">FHIR Server URL:</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" class="form-control" id="publicserverurl" data-toggle="tooltip" data-original-title=''>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="scope" class="col-sm-3 control-label">Scope:</label>
+                                                            <div class="col-sm-9">
+                                                                <div class="col-sm-5 publicscopes" id="scope">
+                                                                    <div class="checkbox">
+                                                                        <label><input class="publicscopesclass" type="checkbox" name="launch" value="launch">launch</label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input class="publicscopesclass" type="checkbox" name="launch/patient" value="launch/patient">launch/patient</label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input class="publicscopesclass" type="checkbox" name="patient/*.read" value="patient/*.read">patient/*.read</label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input class="publicscopesclass" type="checkbox" name="patient/Patient.read" value="patient/Patient.read">patient/Patient.read</label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input class="publicscopesclass" type="checkbox" name="patient/DocumentReference.read" value="patient/DocumentReference.read">patient/DocumentReference.read</label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input class="publicscopesclass" type="checkbox" name="patient/MedicationOrder.read" value="patient/MedicationOrder.read">patient/MedicationOrder.read</label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input class="publicscopesclass" type="checkbox" name="patient/MedicationStatement.read" value="patient/MedicationStatement.read">patient/MedicationStatement.read</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-5 publicscopes">
+                                                                    <div class="checkbox">
+                                                                        <label><input class="publicscopesclass" type="checkbox" name="fhir_complete" value="fhir_complete">fhir_complete</label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input class="publicscopesclass" type="checkbox" name="user/Patient.read" value="user/Patient.read">user/Patient.read</label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input class="publicscopesclass" type="checkbox" name="user/*.read" value="user/*.read">user/*.read</label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input class="publicscopesclass" type="checkbox" name="user/*.*" value="user/*.*">user/*.*</label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input class="publicscopesclass" type="checkbox" name="openid" value="openid">openid</label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input class="publicscopesclass" type="checkbox" name="offline_access" value="offline_access">offline_access</label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input class="confscopesclass" type="checkbox" name="online_access" value="online_access">online_access</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <button type="button" class="btn btn-primary center-block"  onclick="publicserverauth();" id="publicruntestbtn">Authorize</button>
+                                                    </form>
+                                                    <!-- <div class="col-md-12" align="center" style="padding-top:10px;"> Don't have Client ID? <a href="#">Click here</a> to register a client.</div> -->
+                                                </div>
+                                                <div id="blk-2" class="toHide rows" style="display:block;padding-top:35px;">
+                                                    <form class="form-horizontal">
+                                                        <div class="form-group">
+                                                            <label for="clientid" class="col-sm-3 control-label">Client ID:</label>
+                                                            <div class="col-sm-7">
+                                                                <input type="text" class="form-control" id="clientid">
+                                                            </div>
+                                                            <div class="col-sm-1">
+                                                                <div class="dropdown">
+                                                                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="padding: 4px 10px;">Try Me
+                                                                        <span class="caret"></span></button>
+                                                                    <ul class="dropdown-menu" style="min-width: 60px;">
+                                                                        <li><a href="#" onclick="getdemouser('dstu2');">DSTU2</a></li>
+                                                                        <li><a href="#" onclick="getdemouser('stu3');">STU3</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="clientsecret" class="col-sm-3 control-label">Client Secret:</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="password" class="form-control" id="clientsecret">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="serverurl" class="col-sm-3 control-label">FHIR Server URL:</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" class="form-control" id="serverurl" data-toggle="tooltip" data-original-title=''>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="authScope" class="col-sm-3 control-label">Scope:</label>
+                                                            <div class="col-sm-9" id="authScope">
+                                                                <div class="col-sm-5 confscopes">
+                                                                    <div class="checkbox">
+                                                                        <label><input class="confscopesclass" type="checkbox" name="launch" value="launch">launch</label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input class="confscopesclass" type="checkbox" name="launch/patient" value="launch/patient">launch/patient</label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input class="confscopesclass" type="checkbox" name="patient/*.read" value="patient/*.read">patient/*.read</label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input class="confscopesclass" type="checkbox" name="patient/Patient.read" value="patient/Patient.read">patient/Patient.read</label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input class="confscopesclass" type="checkbox" name="patient/DocumentReference.read" value="patient/DocumentReference.read">patient/DocumentReference.read</label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input class="confscopesclass" type="checkbox" name="patient/MedicationOrder.read" value="patient/MedicationOrder.read">patient/MedicationOrder.read</label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input class="confscopesclass" type="checkbox" name="patient/MedicationStatement.read" value="patient/MedicationStatement.read">patient/MedicationStatement.read</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-5 confscopes">
+                                                                    <div class="checkbox">
+                                                                        <label><input class="confscopesclass" type="checkbox" name="fhir_complete" value="fhir_complete">fhir_complete</label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input class="confscopesclass" type="checkbox" name="user/Patient.read" value="user/Patient.read">user/Patient.read</label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input class="confscopesclass" type="checkbox" name="user/*.read" value="user/*.read">user/*.read</label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input class="confscopesclass" type="checkbox" name="user/*.*" value="user/*.*">user/*.*</label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input class="confscopesclass" type="checkbox" name="openid" value="openid">openid</label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input class="confscopesclass" type="checkbox" name="offline_access" value="offline_access">offline_access</label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input class="confscopesclass" type="checkbox" name="online_access" value="online_access">online_access</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <button type="button" class="btn btn-primary center-block" onclick="authorizeserver();" id="authorizebtn">Authorize</button>
+                                                    </form>
+                                                    <!-- <div class="col-md-12" align="center" style="padding-top:10px;"> Don't have Client ID and Client Secret? <a href="#">Click here</a> to register a client.</div> -->
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
+                                <!-- Authorize Modal End-->
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
+                                <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
+                            </div>
+                        </script>
+                        <!--<button type="button" class="btn btn-danger btn-lg" data-target="#authorize-modal" ng-click="open()" data-toggle="modal" data-original-title="" data-toggle="tooltip" id="authbtn">
                         <span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Authorize Server
-                      </button> -->
+                      </button>-->
+                        <button type="button" class="btn btn-default" ng-click="$ctrl.open('lg')">Authorize Server</button>
                     </div>
                     <div class="col-md-3" >
                         <button type="button" class="btn btn-success" data-target="#noauthorize-modal" data-toggle="modal" data-original-title="" data-toggle="tooltip" data-backdrop="static"> No Authorization Required</button>
@@ -110,13 +304,16 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-12">
-                                <ul class="nav nav-tabs" role="tablist" id="myTabs" style="margin-left:50px;">
-                                    <li role="presentation" class="active"><a href="#search" aria-controls="search" role="tab"  data-toggle="tab" style="padding:5px 8px;">Search Parameters</a></li>
+
+                             <!--   <ul class="nav nav-tabs" role="tablist" id="myTabs" style="margin-left:50px;">
+                                    <li role="presentation" class="active"><a href="#search" aria-controls="search" role="tab" data-toggle="tab" style="padding:5px 8px;">Search Parameters</a></li>
                                     <li role="presentation"><a href="#read" aria-controls="read" role="tab" data-toggle="tab" style="padding:5px 8px;">Read</a></li>
                                 </ul>
-                                <div class="tab-content well" style="border:1px solid #ddd;border-radius:4px;margin-bottom:0px;padding:0px;">
-                                    <div role="tabpanel" class="tab-pane active" id="search" style="padding:10px;">
-                                        <div class="panel-group" id="searchaccordion" >
+                                <div class="tab-content well" style="border:1px solid #ddd;border-radius:4px;margin-bottom:0px;padding:0px;">-->
+
+                                    <uib-tabset active="active">
+                                        <uib-tab index="0" heading="Search Parameters">
+                                            <div class="panel-group" id="searchaccordion" >
                                             <div class="panel panel-default">
                                                 <div class="panel-heading">
                                                     <h4 class="panel-title">
@@ -162,41 +359,43 @@
                                             </div>
 
                                         </div>
+                                        </uib-tab>
 
-                                    </div>
-                                    <div role="tabpanel" class="tab-pane" id="read" style="padding:10px;">
-                                        div class="panel-group" id="accordionread" >
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a data-toggle="collapse" data-parent="#accordionread" href="#readcollapse">Read</a>
-                                                </h4>
-                                            </div>
-                                            <div id="readcollapse" class="panel-collapse collapse in">
-                                                <div class="panel-body">
-                                                    <div class="form-group">
-                                                        <div class="col-sm-12" align="center">
-                                                            <p> Please enter id of Selected FHIR Profile in the below field and Run the test</p>
-                                                        </div>
+
+                                            <uib-tab index="1" heading="Read">
+                                                <div class="panel-group" id="accordionread" >
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <h4 class="panel-title">
+                                                            <a data-toggle="collapse" data-parent="#accordionread" href="#readcollapse">Read</a>
+                                                        </h4>
                                                     </div>
-                                                    <div class="form-group readform">
-                                                        <label for="resourceid" class="col-sm-4 control-label">Resource ID:</label>
-                                                        <div class="col-sm-5">
-                                                            <input type="text" class="form-control" id="resourceid" onkeyup="enabletest()">
+                                                    <div id="readcollapse" class="panel-collapse collapse in">
+                                                        <div class="panel-body">
+                                                            <div class="form-group">
+                                                                <div class="col-sm-12" align="center">
+                                                                    <p> Please enter id of Selected FHIR Profile in the below field and Run the test</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group readform">
+                                                                <label for="resourceid" class="col-sm-4 control-label">Resource ID:</label>
+                                                                <div class="col-sm-5">
+                                                                    <input type="text" class="form-control" id="resourceid" onkeyup="enabletest()">
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-
-                                </div>
+                                            </uib-tab>
+                                    </uib-tabset>
                                 </div>
                             </div>
 
                         <button type="button" class="btn btn-primary center-block ladda-button" data-spinner-color="#fff" data-size="s" data-style="expand-right" onclick="runresourcetest();" id="runtestbtn" disabled="disabled">Run Test</button>
                     </form>
                 </div>
+
             </div>
         </div>
     </div>
@@ -302,11 +501,11 @@
 
 
 <!-- Authorize Modal Start-->
-<div class="modal fade" tabindex="-1" role="dialog" id="authorize-modal">
-    <div class="modal-dialog" style="width:900px">
-        <div class="modal-content">
+<div class="modal fade" tabindex="-1" role="dialog"  id="authorize-modal">
+    <div class="modal-dialog" modal="showmodal" style="width:900px">
+        <div class="modal-content" >
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal"  aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Authorize Server</h4>
             </div>
             <div class="modal-body" style="overflow:auto;">
@@ -320,7 +519,7 @@
                 </div>
 
 
-                <div id="blk-1" class="toHide rows" style="display:none;padding-top:35px;">
+                <div id="blk-1"class="toHide rows" style="display:none;padding-top:35px;">
                     <form class="form-horizontal">
                         <div class="form-group">
                             <label for="publicclientid" class="col-sm-3 control-label">Client ID:</label>
