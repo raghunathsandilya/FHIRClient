@@ -10,15 +10,16 @@ angular.module('myApp.view1', ['ngRoute'])
   });
 }])
 
-.controller('View1Ctrl', ['$uibModal','$log','$scope',function($uibModal, $log, $document,modalInstance) {
+.controller('View1Ctrl', ['$scope','$rootScope','$uibModal','$log','$scope',function($scope,$rootScope,$uibModal, $log, $document,modalInstance) {
     var $ctrl = this;
+    var $ctrls = this;
     $ctrl.animationsEnabled = true;
 
 
     $ctrl.open = function (size, parentSelector) {
         var parentElem = parentSelector ?
             angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
-        var modalInstance = $uibModal.open({
+        $rootScope.modalInstance = $uibModal.open({
             animation: $ctrl.animationsEnabled,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -35,27 +36,27 @@ angular.module('myApp.view1', ['ngRoute'])
         });
 
 
-        modalInstance.result.then(function (selectedItem) {
+        $rootScope.modalInstance.result.then(function (selectedItem) {
             $ctrl.selected = selectedItem;
         }, function () {
             $log.info('Modal dismissed at: ' + new Date());
         });
     };
-    $ctrl.cancel = function (modalInstance) {
-       modalInstance.dismiss('cancel');
+    $ctrl.cancel = function () {
+        $rootScope.modalInstance.dismiss();
     };
 
 
-    $ctrl.noauthopen = function (size,parentSelector) {
+    $ctrls.noauthopen = function (size,parentSelector) {
         var parentElem = parentSelector ?
         angular.element($document[0].querySelector('.modal-demo1 ' + parentSelector)) : undefined;
-        var modalInstance = $uibModal.open({
+        $rootScope.modalInstance = $uibModal.open({
             animation: $ctrl.animationsEnabled,
             ariaLabelledBy: 'modal-title1',
             ariaDescribedBy: 'modal-body1',
             templateUrl: 'myModalContent1.html',
             controller: 'View1Ctrl',
-            controllerAs: '$ctrl',
+            controllerAs: '$ctrls',
            size: size,
            // component: 'modalComponent',
             resolve: {
@@ -64,5 +65,18 @@ angular.module('myApp.view1', ['ngRoute'])
                 }
             }
         });
+        console.log($scope.modalInstances);
+
+        $rootScope.modalInstance.result.then(function (selectedItem) {
+            $ctrl.selected = selectedItem;
+        }, function () {
+            $log.info('Modal dismissed at: ' + new Date());
+        });
     }
+
+
+    $ctrls.cancel = function () {
+        console.log($rootScope.modalInstance);
+        $rootScope.modalInstance.dismiss();
+    };
 }]);
