@@ -10,10 +10,8 @@ angular.module('myApp.view1', ['ngRoute'])
   });
 }])
 
-.controller('View1Ctrl', ['$uibModal','$log','$scope',function($uibModal, $log, $document) {
+.controller('View1Ctrl', ['$uibModal','$log','$scope',function($uibModal, $log, $document,modalInstance) {
     var $ctrl = this;
-    $ctrl.items = ['item1', 'item2', 'item3'];
-
     $ctrl.animationsEnabled = true;
 
 
@@ -43,53 +41,28 @@ angular.module('myApp.view1', ['ngRoute'])
             $log.info('Modal dismissed at: ' + new Date());
         });
     };
-    $ctrl.ok = function () {
-        $uibmodalInstance.close($ctrl.selected.item);
+    $ctrl.cancel = function (modalInstance) {
+       modalInstance.dismiss('cancel');
     };
 
-    $ctrl.cancel = function () {
-        $uibView1Ctrl.dismiss('cancel');
-    };
 
-   /* $ctrl.openComponentModal = function () {
+    $ctrl.noauthopen = function (size,parentSelector) {
+        var parentElem = parentSelector ?
+        angular.element($document[0].querySelector('.modal-demo1 ' + parentSelector)) : undefined;
         var modalInstance = $uibModal.open({
             animation: $ctrl.animationsEnabled,
-            component: 'modalComponent',
+            ariaLabelledBy: 'modal-title1',
+            ariaDescribedBy: 'modal-body1',
+            templateUrl: 'myModalContent1.html',
+            controller: 'View1Ctrl',
+            controllerAs: '$ctrl',
+           size: size,
+           // component: 'modalComponent',
             resolve: {
                 items: function () {
                     return $ctrl.items;
                 }
             }
         });
-
-        modalInstance.result.then(function (selectedItem) {
-            $ctrl.selected = selectedItem;
-        }, function () {
-            $log.info('modal-component dismissed at: ' + new Date());
-        });
-    };
-
-    $ctrl.openMultipleModals = function () {
-        $uibModal.open({
-            animation: $ctrl.animationsEnabled,
-            ariaLabelledBy: 'modal-title-bottom',
-            ariaDescribedBy: 'modal-body-bottom',
-            templateUrl: 'stackedModal.html',
-            size: 'sm',
-            controller: function($scope) {
-                $scope.name = 'bottom';
-            }
-        });
-
-        $uibModal.open({
-            animation: $ctrl.animationsEnabled,
-            ariaLabelledBy: 'modal-title-top',
-            ariaDescribedBy: 'modal-body-top',
-            templateUrl: 'stackedModal.html',
-            size: 'sm',
-            controller: function($scope) {
-                $scope.name = 'top';
-            }
-        });
-    };*/
+    }
 }]);
