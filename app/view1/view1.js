@@ -79,4 +79,14 @@ angular.module('myApp.view1', ['ngRoute'])
         console.log($rootScope.modalInstance);
         $rootScope.modalInstance.dismiss();
     };
+    $scope.authorizeserver=function() {
+            var client_id="";
+          	var client_secret="1234567";
+          	var scope="user*/*";
+            var redirect_uri="http://localhost:8000";
+            var response_type="codein";
+           	var url="http://FHIRClient/authorizeserver?scope="+scope+"&client_id="+client_id+"&redirect_uri="+redirect_uri+ "&response_type="+response_type;
+          	//window.location.replace(url);
+          	console.log(url);
+            };
 }]);
