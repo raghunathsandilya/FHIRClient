@@ -10,7 +10,7 @@ angular.module('myApp.view1', ['ngRoute'])
   });
 }])
 
-.controller('View1Ctrl', ['$scope','$rootScope','$uibModal','$log','$scope',function($scope,$rootScope,$uibModal, $log, $document,modalInstance) {
+.controller('View1Ctrl', ['$scope','$rootScope','$http','$uibModal','$log',function($scope,$rootScope,$http,$uibModal, $log, $document,modalInstance) {
     var $ctrl = this;
     var $ctrls = this;
     $ctrl.animationsEnabled = true;
@@ -79,14 +79,65 @@ angular.module('myApp.view1', ['ngRoute'])
         console.log($rootScope.modalInstance);
         $rootScope.modalInstance.dismiss();
     };
-    $scope.authorizeserver=function() {
-            var client_id="";
-          	var client_secret="1234567";
-          	var scope="user*/*";
-            var redirect_uri="http://localhost:8000";
-            var response_type="codein";
-           	var url="http://FHIRClient/authorizeserver?scope="+scope+"&client_id="+client_id+"&redirect_uri="+redirect_uri+ "&response_type="+response_type;
-          	//window.location.replace(url);
-          	console.log(url);
-            };
+
+    $scope.authorizeserver=function(authurl1) {
+      $http({
+          url: "https://fhirtest.sitenv.org/fhirserver/fhir/metadata?_format=json",
+          type: "GET"
+      }).then(function success(data) {
+          console.log("in success http");
+          console.log(data.data);
+
+          var arg =data.data.rest[0].security.extension[0].extension;
+          console.log(arg);
+          for(var i=0;i<arg.length;i++){
+              if (arg[i].url === "register") {
+                 var regurl = arg[i].valueUri;
+              } else if (arg[i].url === "authorize") {
+                 var authurl = arg[i].valueUri;
+                //  console.log(authurl);
+                  localStorage.setItem('authurl',authurl);
+                  var authurl1=localStorage.getItem('authurl');
+                 // console.log(authurl1);
+                  var queryParams={
+                      "client_id":$scope.clientid,
+                      "client_secret":$scope.clientsecret,
+                      "scope":$scope.clientscope,
+                      "serverurl":$scope.serverurl
+                  }
+                  var redirect_uri="http://localhost:8000";
+                  var response_type="code";
+                  var baseurl=authurl1+"?scope="+$scope.clientscope+"&client_id="+$scope.clientid+"&redirect_uri="+redirect_uri+ "&response_type="+response_type;
+                    console.log(baseurl);
+              } else if (arg[i].url === "token") {
+                 var tokenurl = arg[i].valueUri;
+                 // console.log(tokenurl);
+                  localStorage.setItem('tokenurl',tokenurl);
+                  var tokenurl1=localStorage.getItem('tokenurl');
+                 // console.log(tokenurl1);
+
+              }
+
+          }
+
+        },function error(response) {
+                  console.log("error");
+              });
+        /*var queryParams={
+            "client_id":$scope.clientid,
+            "client_secret":$scope.clientsecret,
+            "scope":$scope.clientscope,
+            "serverurl":$scope.serverurl
+        }
+        var redirect_uri="http://localhost:8000";
+        var response_type="code";
+        var baseurl=authurl1+"?scope="+$scope.clientscope+"&client_id="+$scope.clientid+"&redirect_uri="+redirect_uri+ "&response_type="+response_type;
+
+        console.log(authurl1);
+        console.log(baseurl);*/
+
+
+
+
+    };
 }]);
